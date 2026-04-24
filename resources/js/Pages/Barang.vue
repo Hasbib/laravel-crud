@@ -2,6 +2,7 @@
 import ButtonSuccess from '@/Components/Button/ButtonSuccess.vue'
 import HeaderLayout from '@/Layouts/HeaderLayout.vue'
 import { router } from '@inertiajs/vue3';
+import { onMounted, onUnmounted } from 'vue';
 
 defineProps({
     barangs: Array,
@@ -13,6 +14,39 @@ function deleteBarang(id) {
         router.delete(`/barang/${id}`);
     }
 }
+
+let timer;
+
+function resetTimer() {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+        router.post('/logout');
+    }, 10000); // 10 detik
+}
+
+function setupListeners() {
+    window.addEventListener('mousemove', resetTimer);
+    window.addEventListener('keydown', resetTimer);
+    window.addEventListener('click', resetTimer);
+    window.addEventListener('scroll', resetTimer);
+}
+
+function removeListeners() {
+    window.removeEventListener('mousemove', resetTimer);
+    window.removeEventListener('keydown', resetTimer);
+    window.removeEventListener('click', resetTimer);
+    window.removeEventListener('scroll', resetTimer);
+}
+
+onMounted(() => {
+    setupListeners();
+    resetTimer();
+});
+
+onUnmounted(() => {
+    removeListeners();
+    clearTimeout(timer);
+});
 </script>
 
 <template>

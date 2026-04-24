@@ -1,7 +1,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
-import Container from '@/Components/Container/Container.vue'
+import HeaderLayout from '@/Layouts/HeaderLayout.vue'
 import ButtonSuccess from '@/Components/Button/ButtonSuccess.vue'
 import Label from '@/Components/Label/Label.vue'
 import TextInput from '@/Components/InputField/TextInput.vue'
@@ -10,6 +10,7 @@ import NumberInput from '@/Components/InputField/NumberInput.vue'
 
 const props = defineProps({
     barang: Object,
+    user: Object,
 });
 
 const form = reactive({
@@ -44,40 +45,45 @@ function cancel() {
 </script>
 
 <template>
-    <Container>
-        <div class="mb-6">
-            <h1 class="text-2xl font-bold">Edit Barang</h1>
-            <p class="text-gray-600">Ubah informasi barang</p>
-        </div>
+    <div class="min-h-screen bg-gray-100">
+        <HeaderLayout :user="user" />
+        <div class="p-6">
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <div class="mb-6">
+                    <h1 class="text-2xl font-bold">Edit Barang</h1>
+                    <p class="text-gray-600">Ubah informasi barang</p>
+                </div>
 
-        <form @submit.prevent="submit">
-            <div>
-                <Label text="Nama Barang" />
-                <TextInput v-model="form.nama_produk" placeholder="Masukkan nama barang" required />
+                <form @submit.prevent="submit">
+                    <div>
+                        <Label text="Nama Barang" />
+                        <TextInput v-model="form.nama_produk" placeholder="Masukkan nama barang" required />
+                    </div>
+                    <div>
+                        <Label text="Deskripsi Barang" />
+                        <TextArea v-model="form.deskripsi_produk" placeholder="Masukkan deskripsi barang" />
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <Label text="Harga Barang" />
+                            <NumberInput v-model="form.harga" placeholder="Masukkan harga" required />
+                        </div>
+                        <div>
+                            <Label text="Stok Barang" />
+                            <NumberInput v-model="form.stok_barang" placeholder="Masukkan stok" required />
+                        </div>
+                    </div>
+                    <div class="flex justify-end gap-2 mt-6">
+                        <button type="button" @click="cancel" class="btn btn-outline" :disabled="isLoading">
+                            Batal
+                        </button>
+                        <ButtonSuccess type="submit" :disabled="isLoading">
+                            <span v-if="isLoading" class="loading loading-spinner loading-sm"></span>
+                            {{ isLoading ? 'Menyimpan...' : 'Update Barang' }}
+                        </ButtonSuccess>
+                    </div>
+                </form>
             </div>
-            <div>
-                <Label text="Deskripsi Barang" />
-                <TextArea v-model="form.deskripsi_produk" placeholder="Masukkan deskripsi barang" />
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <Label text="Harga Barang" />
-                    <NumberInput v-model="form.harga" placeholder="Masukkan harga" required />
-                </div>
-                <div>
-                    <Label text="Stok Barang" />
-                    <NumberInput v-model="form.stok_barang" placeholder="Masukkan stok" required />
-                </div>
-            </div>
-            <div class="flex justify-end gap-2 mt-6">
-                <button type="button" @click="cancel" class="btn btn-outline" :disabled="isLoading">
-                    Batal
-                </button>
-                <ButtonSuccess type="submit" :disabled="isLoading">
-                    <span v-if="isLoading" class="loading loading-spinner loading-sm"></span>
-                    {{ isLoading ? 'Menyimpan...' : 'Update Barang' }}
-                </ButtonSuccess>
-            </div>
-        </form>
-    </Container>
+        </div>
+    </div>
 </template>

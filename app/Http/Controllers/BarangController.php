@@ -13,7 +13,8 @@ class BarangController extends Controller
     {
         $barang = Barang::all();
         return Inertia::render('Barang', [
-            'barangs' => $barang
+            'barangs' => $barang,
+            'user' => auth()->user(),
         ]);
     }
 

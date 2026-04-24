@@ -61,7 +61,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return to_route('home.index');
+        return to_route('barang.index');
     }
 
     public function logout(Request $request): RedirectResponse

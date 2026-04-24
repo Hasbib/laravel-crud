@@ -19,6 +19,15 @@ return new class extends Migration
             $table->string('password');
             $table->timestamps();
         });
+
+        Schema::create('barangs', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_produk');
+            $table->longText('deskripsi_produk');
+            $table->integer('harga');
+            $table->integer('stok_barang');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -27,5 +36,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('users');
+        Schema::dropIfExists('barangs');
     }
 };

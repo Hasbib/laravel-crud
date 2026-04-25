@@ -28,6 +28,15 @@ return new class extends Migration
             $table->integer('stok_barang');
             $table->timestamps();
         });
+
+        Schema::create('mahasiswas', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->string('nim')->unique();
+            $table->string('jurusan');
+            $table->string('alamat');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -37,5 +46,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('users');
         Schema::dropIfExists('barangs');
+        Schema::dropIfExists('mahasiswas');
     }
 };

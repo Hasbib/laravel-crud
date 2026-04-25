@@ -38,7 +38,7 @@ class AuthController extends Controller
         return to_route('login')->with('success', 'Registrasi berhasil. Silakan login.');
     }
 
-   public function show(Request $request): RedirectResponse
+    public function show(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
@@ -61,7 +61,7 @@ class AuthController extends Controller
 
         $request->session()->regenerate();
 
-        return to_route('barang.index');
+        return to_route('dashboard');
     }
 
     public function logout(Request $request): RedirectResponse
